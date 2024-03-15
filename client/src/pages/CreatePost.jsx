@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { GetRandomPrompt } from "../utils";
 import { FormField, Loader } from "../components";
+import { preview } from "../assets";
 import { useState } from "react";
 
 const CreatePost = () => {
@@ -18,7 +19,9 @@ const CreatePost = () => {
 
   const handleChange = (e) => {};
 
-  const  handleSurpriseMe = (e) => {};
+  const handleSurpriseMe = (e) => {};
+
+  const generateImage = (e) => {};
 
   return (
     <section>
@@ -34,7 +37,6 @@ const CreatePost = () => {
 
       <form className="mt-16 max-w-3xl" onSubmit={handleSubmit}>
         <div className=" flex flex-col gap-5">
-
           <FormField
             labelName="Your Name"
             type="text"
@@ -54,6 +56,51 @@ const CreatePost = () => {
             isSurpriseMe
             handleSurpriseMe={handleSurpriseMe}
           />
+          <div className=" relative bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-64 h-64 focus:border-blue-500 focus:ring-blue-500 flex justify-center items-center tabIndex={0}">
+            {form.photo ? (
+              <img
+                src={form.photo}
+                alt={form.promt}
+                className=" w-full h-full object-contain"
+              />
+            ) : (
+              <>
+                <img
+                  src={preview}
+                  alt="preview"
+                  className="w-9/12 h-9/12 object-contain opacity-40"
+                />
+              </>
+            )}
+            {generatingImage && (
+              <div className=" absolute insert-0 z-0 flex items-center justify-center  rounded-lg">
+                <Loader />
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className=" mt-5 flex gap-5">
+          <button
+            type="button"
+            onClick={generateImage}
+            className=" text-white bg-green-700 w-full px-5 py-2.5 text-center rounded-md"
+          >
+            {generatingImage ? "Generating..." : "Generate"}
+          </button>
+        </div>
+
+        <div className="mt-5">
+          <p className="mt-2 text-[#666e75] text-[14px] flex justify-center items-center">
+            ** Once you have created the image you want, you can share it with
+            others in the community **
+          </p>
+          <button
+            type="submit"
+            className="mt-3 text-white bg-[#6469ff] font-medium rounded-md text-sm w-full px-5 py-2.5 text-center"
+          >
+            {loading ? "Sharing..." : "Share with the Community"}
+          </button>
         </div>
       </form>
     </section>
